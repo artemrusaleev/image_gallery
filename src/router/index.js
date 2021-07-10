@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/image_gallery",
     name: "Home",
     component: Home,
   },
