@@ -98,6 +98,9 @@ export default new Vuex.Store({
     setLocalImagesToStore({ commit }, payload) {
       commit("SET_LOCAL_IMAGES_TO_STORE", payload);
     },
+    setStoreImagesToLocal() {
+      storageActions("images", "set", this.state.galleryImages);
+    },
   },
   getters: {
     getGalleryImages: (state) => {

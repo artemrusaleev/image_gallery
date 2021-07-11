@@ -1,9 +1,12 @@
 <template>
-  <li :data-card-index="cardIndex">
+  <li :data-card-index="cardIndex" @click="cardClickHandler(card)">
     <img :src="card.url" :alt="card.description" class="card__image" />
     <div class="item__additions">
       <span v-if="card.description">{{ card.description }}</span>
-      <a class="item__delete" href="#" @click.prevent="deleteCard(cardIndex)"
+      <a
+        class="item__delete"
+        href="#"
+        @click.prevent.stop="deleteCard(cardIndex)"
         >Delete</a
       >
     </div>
@@ -26,6 +29,9 @@ export default {
   methods: {
     deleteCard(index) {
       this.$emit("card-deleted", index);
+    },
+    cardClickHandler(card) {
+      this.$emit("card-clicked", card);
     },
   },
 };

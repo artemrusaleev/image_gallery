@@ -95,7 +95,7 @@ export default {
     justify-content: center;
     min-width: 100vw;
     min-height: 100vh;
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 0;
     right: 0;
@@ -141,7 +141,18 @@ export default {
       background-color: #333;
       transform: rotate(-45deg);
     }
+    &.light {
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
+      &:before,
+      &:after {
+        background-color: #fff;
+      }
+    }
   }
+
   &__body {
     display: flex;
     flex-direction: column;
@@ -152,6 +163,14 @@ export default {
     background: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
       rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    @media only screen and(max-width:600px) {
+      padding: 0;
+      width: 100%;
+      padding: 20px;
+    }
+    &.lightbox {
+      padding: 0;
+    }
   }
   &__inputs {
     display: flex;
@@ -187,6 +206,15 @@ export default {
     transition: all 0.1s ease-in;
     &:hover {
       transform: scale(1.02);
+    }
+  }
+  &__image {
+    display: block;
+    width: 100%;
+    img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
     }
   }
   &__form {

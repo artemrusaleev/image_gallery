@@ -9,33 +9,57 @@
           :card="image"
           :cardIndex="index"
           @card-deleted="onCardDeleted"
+          @card-clicked="onCardClicked"
           class="card__item"
         ></gallery-card>
       </ul>
     </div>
+    <lightbox-modal
+      :card="currentCard"
+      v-if="showLightboxModal"
+      @close-modal="onCloseModal"
+    ></lightbox-modal>
   </div>
 </template>
 
 <script>
 import GalleryCard from "@/components/GalleryCard.vue";
+import LightboxModal from "../components/LightboxModal.vue";
 export default {
   name: "Home",
   components: {
     GalleryCard,
+    LightboxModal,
   },
+  data: () => ({
+    showLightboxModal: false,
+    currentCard: null,
+  }),
   computed: {
     getGalleryImages() {
       const storage = localStorage;
       const localImages = JSON.parse(storage.getItem("images"));
-      if (localImages) {
-        this.$store.dispatch("setLocalImagesToStore", localImages);
-      }
+      localImages
+        ? this.$store.dispatch("setLocalImagesToStore", localImages)
+        : this.$store.dispatch("setStoreImagesToLocal");
       return this.$store.getters.getGalleryImages;
     },
   },
   methods: {
     onCardDeleted(data) {
       this.$store.dispatch("deleteImage", data);
+    },
+    triggerLightBoxModal() {
+      const mainParent = document.documentElement;
+      this.showLightboxModal = !this.showLightboxModal;
+      mainParent.classList.toggle("modal__open");
+    },
+    onCloseModal() {
+      this.triggerLightBoxModal();
+    },
+    onCardClicked(data) {
+      this.currentCard = data;
+      this.triggerLightBoxModal();
     },
   },
 };

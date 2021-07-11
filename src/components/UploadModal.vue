@@ -1,5 +1,5 @@
 <template>
-  <div class="modal__container">
+  <div class="modal__container" @click="onCloseModal">
     <div class="modal__body">
       <span class="modal__title">Upload new image</span>
       <div class="modal__inputs">
@@ -30,7 +30,7 @@
           >
         </form>
       </div>
-      <a href="#" @click.prevent="onCloseModal" class="modal__close">X</a>
+      <a href="#" @click.prevent class="modal__close">X</a>
     </div>
   </div>
 </template>
@@ -66,8 +66,14 @@ export default {
     modalButtonClickHandler(e) {
       console.log(e.target.parentElement);
     },
-    onCloseModal() {
-      this.$emit("close-modal");
+    onCloseModal(e) {
+      const target = e.target;
+      if (
+        target.parentElement.id === "app" ||
+        target.classList.contains("modal__close")
+      ) {
+        this.$emit("close-modal");
+      }
     },
   },
 };
